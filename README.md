@@ -15,3 +15,4 @@ For a test purposes we will use `Swagger`. To reach it, we should open 'http://l
 ## Additional resources
 * https://docs.microsoft.com/en-us/aspnet/core/tutorials/min-web-api?view=aspnetcore-6.0&tabs=visual-studio (Minimal API)
 * https://docs.microsoft.com/en-us/dotnet/csharp/language-reference/builtin-types/record (Records)
+* https://www.tutorialsteacher.com/linq (Linq)
