@@ -9,7 +9,7 @@ var random = new Random();
 var knifes = new List<KnifeDto>();
 for (int i = 0; i < 10; i++)
 {
-    knifes.Add(new(i, $"SomeKnife #{i}", "Factory New", random.Next(1000, 10000)));
+    knifes.Add(new KnifeDto(id: i, name: $"SomeKnife #{i}", exterior: "Factory New", price: random.Next(1000, 10000)));
 }
 
 
@@ -18,6 +18,11 @@ for (int i = 0; i < 10; i++)
 app.MapGet("/knife", () => 
 {
     return knifes;
+});
+
+app.MapGet("/knife/{id}", (int id) =>
+{
+    return knifes.FirstOrDefault(x => x.Id == id);
 });
 
 //So the task is to implement new endpoint for buying those knifes
@@ -34,4 +39,18 @@ app.UseSwagger();
 app.UseSwaggerUI();
 app.Run();
 
-public record KnifeDto(int Id, string Name, string Exterior, int Price);
+public class KnifeDto
+{
+    public KnifeDto(int id, string name, string exterior, int price)
+    {
+        Id = id;
+        Name = name;
+        Exterior = exterior;
+        Price = price;
+    }
+
+    public int Id { get; set; }
+    public string Name { get; set; }
+    public string Exterior { get; set; }
+    public int Price { get; set; }
+}
