@@ -29,12 +29,17 @@ app.MapGet("/knife/{id}", (int id) =>
 //Basically we pass an id of a knife we want to buy, and method should returns true if it success or false if it's not
 //Example of a request POST 'localhost:5000/knife/1/1234'
 app.MapPost("/knife/{id}/buy/{price}", (int id, int price) => {
-    bool knifeSell = knifes.Any(x => x.Price <= price);
-    if (knifeSell == true)
+    var knife = knifes.FirstOrDefault(x => x.Id == id);
+    if (knife == null)
     {
-        knifes.Remove(knifes.FirstOrDefault(x => x.Id == id));
+        return false;
     }
-    return knifeSell;
+    if (knife.Price <= price)
+    {
+        knifes.Remove(knife);
+        return true;
+    } 
+    return false;
 });
 
 //The second task is to implement adding of new knife
