@@ -30,21 +30,20 @@ app.MapGet("/knife/{id}", (int id) =>
 //Example of a request POST 'localhost:5000/knife/1/1234'
 app.MapPost("/knife/{id}/buy/{price}", (int id, int price) => {
     var knife = knifes.FirstOrDefault(x => x.Id == id);
-    if (knife == null)
+    if (knife == null || knife.Price > price)
     {
         return false;
     }
-    if (knife.Price <= price)
-    {
-        knifes.Remove(knife);
-        return true;
-    } 
-    return false;
+    knifes.Remove(knife);
+    return true;
 });
 
 //The second task is to implement adding of new knife
 //The endpoint should look like POST 'localhost:5000/knife/'
+//app.MapPost("/knife/add/",(int id, string name, string exterior, int price) =>
+//{
 
+//});
 app.UseSwagger();
 app.UseSwaggerUI();
 app.Run();
