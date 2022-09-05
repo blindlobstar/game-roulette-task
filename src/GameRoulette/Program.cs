@@ -30,8 +30,7 @@ app.MapGet("/knife/{id}", (int id) =>
 //Example of a request POST 'localhost:5000/knife/1/1234'
 app.MapPost("/knife/", (AddKnifeRequestDto myknife) =>
 {
-int idCount = knifes.Last().Id;
-int id = idCount + 1;
+int id = knifes.Last().Id + 1;
 knifes.Add(new KnifeDto(id: id, myknife.Name, exterior: myknife.Exterior, price: myknife.Price));
 });
 app.UseSwagger();
