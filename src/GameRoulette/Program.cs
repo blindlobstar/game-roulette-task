@@ -28,7 +28,8 @@ app.MapGet("/knife/{id}", (int id) =>
 //So the task is to implement new endpoint for buying those knifes
 //Basically we pass an id of a knife we want to buy, and method should returns true if it success or false if it's not
 //Example of a request POST 'localhost:5000/knife/1/1234'
-app.MapPost("/knife/{id}/buy/{price}", (int id, int price) => {
+app.MapPost("/knife/{id}/buy/{price}", (int id, int price) => 
+{
     var knife = knifes.FirstOrDefault(x => x.Id == id);
     if (knife == null || knife.Price > price)
     {
@@ -37,13 +38,12 @@ app.MapPost("/knife/{id}/buy/{price}", (int id, int price) => {
     knifes.Remove(knife);
     return true;
 });
+app.MapPost("/knife/", (AddKnifeRequestDto myknife) =>
+{
+    int id = knifes.Last().Id + 1;
+    knifes.Add(new KnifeDto(id: id, myknife.Name, exterior: myknife.Exterior, price: myknife.Price));
+});
 
-//The second task is to implement adding of new knife
-//The endpoint should look like POST 'localhost:5000/knife/'
-//app.MapPost("/knife/add/",(int id, string name, string exterior, int price) =>
-//{
-
-//});
 app.UseSwagger();
 app.UseSwaggerUI();
 app.Run();
@@ -59,6 +59,19 @@ public class KnifeDto
     }
 
     public int Id { get; set; }
+    public string Name { get; set; }
+    public string Exterior { get; set; }
+    public int Price { get; set; }
+}
+public class AddKnifeRequestDto
+{
+    public AddKnifeRequestDto(string name, string exterior, int price)
+    {
+        Name = name;
+        Exterior = exterior;
+        Price = price;
+    }
+
     public string Name { get; set; }
     public string Exterior { get; set; }
     public int Price { get; set; }
