@@ -38,10 +38,20 @@ app.MapPost("/knife/{id}/buy/{price}", (int id, int price) =>
     knifes.Remove(knife);
     return true;
 });
+
 app.MapPost("/knife/", (AddKnifeRequestDto myknife) =>
 {
     int id = knifes.Last().Id + 1;
     knifes.Add(new KnifeDto(id: id, myknife.Name, exterior: myknife.Exterior, price: myknife.Price));
+});
+
+//endpoit of getting a random knife
+app.MapPost("/knife/rulette",() =>
+{
+    //logic
+    var randomFirst = knifes.ElementAt(random.Next(knifes.Count-1)); 
+    knifes.Remove(randomFirst);
+    return randomFirst;
 });
 
 app.UseSwagger();
